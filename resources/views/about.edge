@@ -1,0 +1,160 @@
+@layout('layout/master')
+
+@section('page-css')
+    <link rel="stylesheet" href="{{ asset('assets/theme/sweetalert/sweetalert2.min.css') }}">
+@endsection
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form
+                        id="about"
+                        method="POST"
+                        action=""
+                        enctype="multipart/form-data"
+                        novalidate
+                        >
+						<h2 class="text-center mb-1">About</h2>
+                        <div class="form-row">
+							<div class="form-group mb-3 col-md-6">
+								{{--  <label for="en_about">English</label>  --}}
+								<textarea
+									class="form-control"
+									id="en_about"
+									placeholder="About journal in English"
+									rows="10"
+									name="en_about"
+									data-parsley-required-message="Please enter about journal in English."
+									required
+									>{{ en_about }}</textarea>
+							</div>
+						</div>
+
+							<h2 class="text-center mb-1">Vision</h2>
+                        <div class="form-row">
+							<div class="form-group mb-3 col-md-6">
+								{{--  <label for="en_vision">English</label>  --}}
+								<textarea
+									class="form-control"
+									id="en_vision"
+									placeholder="Vison of Journal in English"
+									rows="10"
+									name="en_vision"
+									data-parsley-required-message="Please enter Vison of Journal in English."
+									required
+									>{{ en_vision }}</textarea>
+							</div>
+							
+						</div>
+
+						<h2 class="text-center mb-1">Mission</h2>
+                        <div class="form-row">
+							<div class="form-group mb-3 col-md-6">
+								{{--  <label for="en_message">English</label>  --}}
+								<textarea
+									class="form-control"
+									id="en_message"
+									placeholder="Journal's message in English"
+									rows="10"
+									name="en_message"
+									data-parsley-required-message="Please enter journal's message in English."
+									required
+									>{{ en_message }}</textarea>
+							</div>
+							
+						</div>
+
+						<h2 class="text-center mb-1">Objectives</h2>
+                        <div class="form-row">
+							<div class="form-group mb-3 col-md-6">
+								<textarea
+									class="form-control"
+									id="en_goal"
+									placeholder="Goal of Journal English"
+									rows="10"
+									name="en_goal"
+									data-parsley-required-message="Please enter Goal of Journal English."
+									required
+									>{{ en_goal }}</textarea>
+							</div>
+							
+						</div>
+
+						<h2 class="text-center mb-1">Values</h2>
+                        <div class="form-row">
+							<div class="form-group mb-3 col-md-6">
+								<textarea
+									class="form-control"
+									id="en_values"
+									placeholder="Values of Journal English"
+									rows="10"
+									name="en_values"
+									data-parsley-required-message="Please enter Values of Journal English."
+									required
+									>{{ en_values }}</textarea>
+							</div>
+							
+						</div>
+						<div class="col-12 text-center">
+							<button class="btn btn-default" type="submit">Save</button>
+						</div>
+                    </form>
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div><!-- end col -->
+    </div>
+@endsection
+
+@section('page-scripts')
+    <script src="{{ asset('assets/theme/sweetalert/sweetalert2.min.js') }}"></script>
+	<script src="{{ asset('assets/js/parsley.min.js') }}"></script>
+	<script>
+		const form = $('form').parsley();
+		form.on('form:submit', function () {
+            console.log('prevent form submit');
+            return false;
+
+        });
+
+        form.on('form:success', function (e) {
+            // e.preventDefault();
+
+            const formJ = $(e.element);
+            const formData = new FormData(formJ[ 0 ]);
+            var url = formJ.attr('action');
+            const submitBtn = formJ.find('button[type=submit]');
+			submitBtn.attr('disabled', true);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: (data) => {
+                    console.log('updated successfully');
+					submitBtn.attr('disabled', false);
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Updated successfully',
+                        type: 'success'
+
+                    });
+
+                },
+                error: (error) => {
+                    console.log('can not update content pelase try again.');
+					submitBtn.attr('disabled', false);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Oops! can not update. Please try again.',
+                        type: 'error'
+
+                    });
+                }
+            })
+
+        });
+    </script>
+@endsection

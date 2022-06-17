@@ -1,0 +1,151 @@
+@layout('layout/master')
+@section('content')
+	<div class="row">
+        <div class="col-lg-2 col-xl-2">
+        </div>
+        <div class="col-lg-8 col-xl-8">
+            <div class="card-box">
+               
+                @if(!error && !message)
+                @elseif(error)
+                    <div class="alert alert-danger bg-danger text-white border-0 fade show" role="alert">
+                        {{ error }}
+                    </div>
+                @else
+                    <div class="alert alert-success bg-success text-white border-0 fade show" role="alert">
+                        {{ message }}
+                    </div>
+                @endif
+                <ul class="nav nav-pills navtab-bg nav-justified">
+                    <li class="nav-item">
+                        <a href="#android-tab" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                            Android
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#ios-tab" data-toggle="tab" aria-expanded="false" class="nav-link">
+                            iOS
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class=" tab-pane show active" id="android-tab">
+                        <form id="" action="{{ route('AppSettingsController.updateAndroidSettings') }}" method="POST">
+                            <div class="form-group mb-3">
+                                <label for="an_app_ver">App Version</label>
+                                <input
+                                    type="text"
+                                    id="an_app_ver"
+                                    class="form-control autonumber"
+                                    name="app_ver"
+                                    placeholder="Enter latest app version."
+                                    data-parsley-required-message="Please enter app version."
+                                    data-parsley-version="{{ android.version }}"
+                                    data-toggle="input-mask"
+                                    data-mask-format="0ZZZ.0ZZZ.0ZZZ.0ZZZ"
+                                    value="{{ android.version }}"
+                                    required
+                                    >
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="an_is_force_update"
+                                        class="custom-control-input"
+                                        name="is_force_update"
+                                        @if(android.is_force_update)
+                                            checked
+                                        @endif
+                                        >
+                                    <label class="custom-control-label" for="an_is_force_update">Is Force Update?</label>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="and_is_under_maintenance"
+                                        name="is_under_maintenance"
+                                        class="custom-control-input"
+                                        @if(android.is_under_maintenance)
+                                            checked
+                                        @endif
+                                        >
+                                    <label class="custom-control-label" for="and_is_under_maintenance">Is Under maintainance?</label>
+                                </div>
+                            </div>
+                            <div class="response-div"></div>
+                            <div class="form-group mb-0 text-center">
+                                <button class="btn btn-default" type="submit">Save</button>
+                            </div>
+                        </form>
+                    </div> <!-- end tab-pane -->
+                    <!-- end change password section content -->
+
+                    <div class="tab-pane" id="ios-tab">
+                        <form id="ios_app_form" action="{{ route('AppSettingsController.updateIOSSettings') }}" method="POST">
+                            <div class="form-group mb-3">
+                                <label for="ios_app_ver">App Version</label>
+                                <input
+                                    id="ios_app_ver"
+                                    class="form-control autonumber"
+                                    type="text"
+                                    name="app_ver"
+                                    placeholder="Enter latest app version."
+                                    data-parsley-required-message="Please enter app version."
+                                    data-parsley-version="{{ ios.version }}"
+                                    data-toggle="input-mask"
+                                    data-mask-format="0ZZZ.0ZZZ.0ZZZ.0ZZZ"
+                                    value="{{ ios.version }}"
+                                    required
+                                    >
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="ios_is_force_update"
+                                        class="custom-control-input"
+                                        name="is_force_update"
+                                        @if(ios.is_force_update)
+                                            checked
+                                        @endif
+                                        >
+                                    <label class="custom-control-label" for="ios_is_force_update">Is Force Update?</label>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="ios_is_under_maintenance"
+                                        class="custom-control-input"
+                                        name="is_under_maintenance"
+                                        @if(ios.is_under_maintenance)
+                                            checked
+                                        @endif
+                                        >
+                                    <label class="custom-control-label" for="ios_is_under_maintenance">Is Under maintainance?</label>
+                                </div>
+                            </div>
+                            <div class="response-div"></div>
+                            <div class="form-group mb-0 text-center">
+                                <button class="btn btn-default" type="submit">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- end timeline content-->
+
+                </div> <!-- end tab-content -->
+            </div> <!-- end card-box-->
+
+        </div> <!-- end col -->
+    </div>
+@endsection
+@section('page-scripts')
+    <script src="{{ asset('assets/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('assets/theme/js/jquery.mask.min.js') }}"></script>
+    <script src="{{ asset('assets/js/service_version_form.js') }}"></script>
+    
+@endsection

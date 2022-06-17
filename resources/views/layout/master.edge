@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>{{ env('Name') }}: {{ page_name }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{ asset('assets/images/favicon_new.png') }}">
+
+        <!-- App css -->
+        <link rel="stylesheet" href="{{ asset('assets/theme/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/theme/css/icons.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/theme/css/app.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+        @!section('page-css')
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            @include('partials/topbar')
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+            @include('partials/left-sidebar')
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <h4 class="page-title"> {{ page_name }} </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        @!section('content')
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                @include('partials/footer')
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        <!-- Right Sidebar -->
+        {{--  @include('partials/right-sidebar')  --}}
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+
+        <script src="{{asset('assets/theme/js/vendor.min.js')}}"></script>
+        <script src="{{asset('assets/theme/js/app.min.js')}}"></script>
+
+        @!section('page-scripts')
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <script>
+            $(window).on('load', function() {
+                const loader = $('#loader');
+                $('a[class="menu-link"]').click(function () {
+                    loader.show();
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+@layout('layout/master')
+
+@section('page-css')
+    <link rel="stylesheet" href="{{asset('assets/theme/quill/quill.core.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/theme/quill/quill.snow.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/theme/sweetalert/sweetalert2.min.css') }}">
+@endsection
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center mb-3">Content for {{ page_name }}</h3>
+                    <div id="en_content" style="height: 70vh;">
+                        {{{ en_page.content }}}
+                    </div> <!-- end Snow-editor-->
+                    <div class="col-12 offset-5 mt-3">
+                        <button id="update-content-btn" class="btn btn-default mb-3" > Update </button>
+                    </div>
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div><!-- end col -->
+    </div>
+@endsection
+
+@section('page-scripts')
+    <script src="{{asset('assets/theme/quill/quill.min.js')}}"></script>
+    <script src="{{ asset('assets/theme/sweetalert/sweetalert2.min.js') }}"></script>
+
+    <script>
+        const editorOptions = {
+            theme: 'snow',
+            modules: {
+                'toolbar': [
+                    // [{ 'font': [] }, { 'size': [] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    // [{ 'color': [] }, { 'background': [] }],
+                    [{ 'script': 'super' }, { 'script': 'sub' }],
+                    [{ 'header': [false, 4, 5, 6] }, 'blockquote',], // 'code-block'
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+                    [{ 'align': [] }], // 'direction'
+                    ['link'], // 'video', 'formula', 'image'
+                    // ['clean'] // clear formating
+                ]
+            },
+        };
+        const enContentEditor = new Quill('#en_content', editorOptions);
+
+        $('#update-content-btn').click(() => {
+            console.log('updating content');
+            const enContent = enContentEditor.root.innerHTML;
+            // const arContent = arContentEditor.root.innerHTML;
+            const formData = new FormData();
+            formData.set('en_content', enContent);
+            $.ajax({
+                type: 'POST',
+                url: '',
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: (data) => {
+                    console.log('updated successfully');
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Updated successfully',
+                        type: 'success'
+
+                    });
+
+                },
+                error: (error) => {
+                    console.log('can not update content pelase try again.');
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Oops! can not update. Please try again.',
+                        type: 'error'
+
+                    });
+                }
+            })
+        });
+    </script>
+@endsection

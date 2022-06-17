@@ -1,0 +1,32 @@
+<div id="table-update-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update {{ form_name }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <form
+                        id="update-form"
+                        data-form-type="update"
+                        method="POST"
+                        class="form-add-or-update"
+                        >
+                        @each(form_field in form_fields)
+                            @if(form_field.is_updatable == true)
+                                {{{ getFormFieldMarkup(form_field, true) }}}
+                            @endif
+                        @endeach
+                        <input id="id_update" type="hidden" name="id" value="" data-form-field-type="id" />
+                        <div class="text-center">
+                            <button class="btn btn-default" type="submit">Update</button>
+                            <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div>
+    </div>
+</div>

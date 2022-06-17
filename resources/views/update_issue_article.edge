@@ -1,0 +1,240 @@
+@layout('layout/master')
+
+@section('page-css')
+    <link rel="stylesheet" href="{{ asset('assets/theme/sweetalert/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/theme/bootstrap-select/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <style>
+        embed{
+            height: 80vh;
+        }
+    </style>
+@endsection
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form
+                        id="issue_article_form"
+                        action=""
+                        enctype="multipart/form-data"
+                        method="POST"
+                        novalidate
+                        >
+                        <input type="hidden" name="id" value="{{ issue_article.id }}">
+                        <div class="form-row">
+                            <div class="form-group mb-3 col-md-6">
+                                <label for="en_title" class="">Title in EN</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="en_title"
+                                    placeholder="Enter title in English."
+                                    name="title_in_en"
+                                    data-parsley-required-message="Please enter title in English."
+                                    value="{{ issue_article.en_title }}"
+                                    required
+                                    />
+                            </div>
+                            <div class="form-group mb-3 col-md-6">
+                                <label for="ar_title">Title in AR</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="title_ar"
+                                    placeholder="Enter title in Arabic."
+                                    name="title_in_ar"
+                                    data-parsley-required-message="Please enter title in Arabic."
+                                    value="{{ issue_article.ar_title }}"
+                                    required
+                                >
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group mb-3 col-md-6">
+                                <label for="name">Name in EN</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    name="name_in_en"
+                                    value="{{ issue_article.name_en }}"
+                                >
+                            </div>
+                            <div class="form-group mb-3 col-md-6">
+                                <label for="name">Name in AR</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="name_in_ar"
+                                    id="name"
+                                    value="{{ issue_article.name_ar }}"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-row">
+                             <div class="form-group mb-3 col-md-6">
+                                <label for="email">Email</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="email"
+                                    name="email"
+                                    value="{{ issue_article.email }}"
+                                >
+                            </div>
+                            <div class="form-group mb-3 col-md-6">
+                                <label for="issue">Issue</label>
+                                <select
+                                    id="issue"
+                                    name="issue"
+                                    class="selectpicker form-control"
+                                    {{--  data-style="btn-outline-primary"  --}}
+                                    data-live-search="true"
+                                    data-parsley-required-message="Please select issue."
+                                    data-parsley-errors-container="#category-error-msg"
+                                    required
+                                    >
+                                    @each(issue in issues)
+                                        @if(issue.id === issue_article.issue_id)
+                                            <option value="{{ issue.id }}" selected>{{ issue.value }}</option>
+                                        @else
+                                            <option value="{{ issue.id }}" >{{ issue.value }}</option>
+                                        @endif
+                                    @endeach
+                                </select>
+                                <div id="category-error-msg"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group mb-3 col-md-6">
+                                <label for="doi_link">DOI Link</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="doi_link"
+                                    name="doi_link"
+                                    value="{{ issue_article.doi_link }}"
+                                >
+                            </div>
+                            <div class="form-group mb-3 col-md-6">
+                                <label for="page_no">Page No</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="page_no"
+                                    name="page_no"
+                                    value="{{ issue_article.page_no }}"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group mb-3 col-md-6">
+                                <label for="en_description">Description in English</label>
+                                <textarea
+                                    class="form-control"
+                                    id="en_description"
+                                    placeholder="Describe issue in English"
+                                    rows="10"
+                                    name="description_in_en"
+                                    data-parsley-required-message="Please enter description in English."
+                                    required
+                                    >{{ issue_article.en_description }}</textarea>
+                            </div>
+                            <div class="form-group mb-3 col-md-6">
+                                <label for="ar_description">Description in Arabic</label>
+                                <textarea
+                                    class="form-control"
+                                    id="ar_description"
+                                    placeholder="Describe issue in Arabic"
+                                    rows="10"
+                                    name="description_in_ar"
+                                    data-parsley-required-message="Please enter description in Arabic."
+                                    required
+                                    >{{ issue_article.ar_description }}</textarea>
+                            </div>
+                        </div>
+                            {{--  <div class="custom-control custom-checkbox mb-3">
+                                <input
+                                    type="checkbox"
+                                    id="is_approved"
+                                    class="custom-control-input"
+                                    name="is_approved"
+                                    @if(issue_article.is_approved)
+                                        checked
+                                    @endif
+                                    >
+                                <label class="custom-control-label" for="is_approved">Is Approved ?</label>
+                            </div>  --}}
+                            <div class="col-12 offset-5">
+                                <button class="btn btn-default" type="submit">Update Issue</button>
+                            </div>
+                    </form>
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div><!-- end col -->
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="cord-body">
+                    <h3 class="text-center mb-3">Research Paper</h3>
+                    @if(isDocFile(issue_article.research_file_name))
+                      <iframe
+                        src="https://docs.google.com/gview?url={{ env('BASE_URL') }}/uploads/issues/research/{{ issue_article.research_file_name }}&embedded=true"
+                        width="100%"
+                        style="height:70vh;"
+                        ></iframe>
+                    @else
+                        <embed src="/uploads/issues/research/{{ issue_article.research_file_name }}" type="application/pdf" width="100%">
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="cord-body">
+                    <h3 class="text-center mb-3">Information Paper</h3>
+                    @if(isDocFile(issue_article.info_file_name))
+                      <iframe
+                        src="https://docs.google.com/gview?url={{ env('BASE_URL') }}/uploads/issues/info/{{ issue_article.info_file_name }}&embedded=true"
+                        width="100%"
+                        style="height:70vh;"
+                        ></iframe>
+                    @else
+                        <embed src="/uploads/issues/info/{{ issue_article.info_file_name }}" type="application/pdf" width="100%">
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="cord-body">
+                    <h3 class="text-center mb-3">Policy Paper</h3>
+                    @if(isDocFile(issue_article.policy_file_name))
+                      <iframe
+                        src="https://docs.google.com/gview?url={{ env('BASE_URL') }}/uploads/issues/policy/{{ issue_article.policy_file_name }}&embedded=true"
+                        width="100%"
+                        style="height:70vh;"
+                        ></iframe>
+                    @else
+                        <embed src="/uploads/issues/policy/{{ issue_article.policy_file_name }}" type="application/pdf" width="100%">
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('page-scripts')
+    <script src="{{ asset('assets/theme/sweetalert/sweetalert2.min.js') }}"></script>
+	<script src="{{ asset('assets/theme/bootstrap-select/bootstrap-select.min.js') }}"></script>
+	<script src="{{ asset('assets/js/parsley.min.js') }}"></script>
+	<script src="{{ asset('assets/js/update_issue_article.js') }}"></script>
+@endsection

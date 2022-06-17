@@ -1,0 +1,154 @@
+@layout('layout/master')
+
+@section('page-css')
+@endsection
+
+@section('content')
+    <div class="row">
+        <div class="col-lg-2 col-xl-2">
+        </div>
+        <div class="col-lg-8 col-xl-8">
+            <div class="card-box">
+                <ul class="nav nav-pills navtab-bg nav-justified">
+                    <li class="nav-item">
+                        <a href="#change-password" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                            Change Password
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#change-username" data-toggle="tab" aria-expanded="false" class="nav-link">
+                            Change Name & Email
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class=" tab-pane show active" id="change-password">
+                        <form
+                            id="change-password-form"
+                            action="{{ route('admin_change_pass') }}"
+                            method="POST"
+                            novalidate
+                            >
+                            <div class="password-toggle-icon form-group">
+                                <label for="current_password">Current Password</label>
+                                <input
+                                    class="form-control"
+                                    type="password"
+                                    id="current_password"
+                                    name="current_password"
+                                    placeholder="Enter your current password"
+                                    data-parsley-required-message="Please enter current password."
+                                    required
+                                    >
+                            </div>
+                            <div class="password-toggle-icon form-group">
+                                <label for="new_password">New Password</label>
+                                <input
+                                    class="form-control"
+                                    type="password"
+                                    id="new_password"
+                                    name="new_password"
+                                    placeholder="Enter your new password"
+                                    data-parsley-required-message="Please enter new password."
+                                    data-parsley-password="true"
+                                    required
+                                    >
+                            </div>
+                            <div class="password-toggle-icon form-group">
+                                <label for="conf_password">Confirm Password</label>
+                                <input
+                                    class="form-control"
+                                    type="password"
+                                    id="conf_password"
+                                    name="conf_password"
+                                    placeholder="Confirm your password"
+                                    data-parsley-required-message="Please enter confirm password."
+                                    data-parsley-password2="true"
+                                    required
+                                    >
+                            </div>
+                            <div class="response_msg"></div>
+                            <div class="form-group mb-0 text-center">
+                                <button class="btn btn-default" type="submit"> Change</button>
+                            </div>
+                        </form>
+                    </div> <!-- end tab-pane -->
+                    <!-- end change password section content -->
+
+                    <div class="tab-pane" id="change-username">
+                        <form
+                            id="change-username-form"
+                            action="{{ route('admin_change_profile') }}"
+                            method="POST"
+                            novalidate
+                            >
+                            <div class="form-group">
+                                <label for="username">New Email</label>
+                                <input
+                                    class="form-control"
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value="{{ auth.user.email }}"
+                                    placeholder="Enter your new email address."
+                                    data-parsley-required-message="Please enter email address."
+                                    data-parsley-type-message="Please enter valid email address."
+                                    required
+                                    >
+                            </div>
+                            <div class="form-group">
+                                <label for="username">New First Name</label>
+                                <input
+                                    class="form-control"
+                                    type="text"
+                                    id="username"
+                                    name="name"
+                                    value="{{ auth.user.first_name }}"
+                                    placeholder="Enter your new first name."
+                                    data-parsley-required-message="Please enter first name."
+                                    maxlength="15"
+									minlength="5"
+                                    data-parsley-type="alphanum"
+									data-parsley-type-message="Special symbols are not allowed."
+									data-parsley-length-message="Name shoud be between 5 and 15 characters."
+                                    required
+                                    >
+                            </div>
+                            <div class="form-group">
+                                <label for="username">New last Name</label>
+                                <input
+                                    class="form-control"
+                                    type="text"
+                                    id="username"
+                                    name="name"
+                                    value="{{ auth.user.last_name }}"
+                                    placeholder="Enter your new last name."
+                                    data-parsley-required-message="Please enter last name."
+                                    maxlength="15"
+									minlength="5"
+                                    data-parsley-type="alphanum"
+									data-parsley-type-message="Special symbols are not allowed."
+									data-parsley-length-message="Name shoud be between 5 and 15 characters."
+                                    required
+                                    >
+                            </div>
+                            <div class="response_msg"></div>
+                            <div class="form-group mb-0 text-center">
+                                <button class="btn btn-default" type="submit">Change</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- end timeline content-->
+
+                </div> <!-- end tab-content -->
+            </div> <!-- end card-box-->
+
+        </div> <!-- end col -->
+    </div>
+    <!-- end row-->
+@endsection
+
+@section('page-scripts')
+    <script src="{{ asset('assets/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('assets/js/profile.js') }}"></script>
+@endsection

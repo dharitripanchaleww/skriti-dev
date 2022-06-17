@@ -1,0 +1,61 @@
+@each(form_field in form_fields)
+    @if(form_field.label == 'Status' && form_field.type == 'dropdown')
+        <div id="table-update-status-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update Status</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="status-form"
+                                method="POST"
+                                data-form-type="status"
+                                class="needs-validation form-add-or-update"
+                                enctype="multipart/form-data"
+                                >
+                                        {{{ getStatusFormFieldMarkup(form_field) }}}
+                                        <input type="hidden" name="id" value="" data-form-field-type="id" />
+                                        <div class="text-center">
+                                    <button class="btn btn-default" type="submit">Update</button>
+                                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div>
+            </div>
+        </div>
+    @elseif(form_field.label == 'Featured' && form_field.type == 'dropdown')
+        <div id="table-update-is-featured" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update Feature</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="feature-form"
+                                method="POST"
+                                data-form-type="feature"
+                                class="needs-validation form-add-or-update"
+                                enctype="multipart/form-data"
+                            >
+                                {{{ getStatusFormFieldMarkup(form_field) }}}
+                                <input type="hidden" name="id" value="" data-form-field-type="id" />
+                                <div class="text-center">
+                                    <button class="btn btn-default" type="submit">Update</button>
+                                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div>
+            </div>
+        </div>
+    @endif
+@endeach

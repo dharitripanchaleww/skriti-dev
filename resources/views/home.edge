@@ -1,0 +1,336 @@
+@layout('layout/master')
+@section('content')
+	<h2>Welcome, {{ auth.user.first_name }} {{ auth.user.last_name}} </h2>
+	<div class="row">
+		<div class="col-md-6 col-xl-3">
+			<div class="widget-rounded-circle card-box">
+				<div class="row">
+					<div class="col-6">
+						<div class="avatar-lg rounded-circle bg-soft-info border-info border">
+							<i class="fe-archive font-22 avatar-title text-info"></i>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="text-right">
+							<h3 class="text-dark mt-1"><span data-plugin="counterup">{{ total_issues }}</span></h3>
+							<p class="text-muted mb-1 text-truncate">Total Archives</p>
+						</div>
+                    </div>
+                </div> <!-- end row-->
+            </div> <!-- end widget-rounded-circle-->
+        </div> <!-- end col-->
+
+        <div class="col-md-6 col-xl-3">
+            <div class="widget-rounded-circle card-box">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="mdi mdi-newspaper font-22 avatar-title text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-right">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup"> {{ total_issues_articles }} </span></h3>
+                            <p class="text-muted mb-1 text-truncate"> Total Issues </p>
+                        </div>
+                    </div>
+                </div> <!-- end row-->
+            </div> <!-- end widget-rounded-circle-->
+        </div> <!-- end col-->
+
+        <div class="col-md-6 col-xl-3">
+            <div class="widget-rounded-circle card-box">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-soft-info border-info border">
+                            <i class="fas fa-tasks font-22 avatar-title text-info"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-right">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup"> {{ total_pending_issues_articles }} </span></h3>
+                            <p class="text-muted mb-1 text-truncate">Total Pending Issues</p>
+                        </div>
+                    </div>
+                </div> <!-- end row-->
+            </div> <!-- end widget-rounded-circle-->
+        </div> <!-- end col-->
+
+        <div class="col-md-6 col-xl-3">
+            <div class="widget-rounded-circle card-box">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="mdi mdi-newspaper font-22 avatar-title text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-right">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup"> {{ total_published_news_articles }} </span></h3>
+                            <p class="text-muted mb-1 text-truncate">Total Published News</p>
+                        </div>
+                    </div>
+                </div> <!-- end row-->
+            </div> <!-- end widget-rounded-circle-->
+        </div> <!-- end col-->
+    </div>
+     <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-widgets">
+                    </div>
+                    <h4 class="header-title mb-0">Issues</h4>
+
+                    <div id="cardCollpase3" class="collapse pt-3 show">
+                        <div class="text-center">
+                            <div id="articles_stats"></div>
+                            <div class="row mt-3">
+                                <div class="col-4">
+                                    <p class="text-muted font-15 mb-1 text-truncate">Total</p>
+                                    <h4>{{ article_statistics.total }}</h4>
+                                </div>
+                                <div class="col-4">
+                                    <p class="text-muted font-15 mb-1 text-truncate">Last Month</p>
+                                    <h4>{{ article_statistics.last_month }}</h4>
+                                </div>
+                                <div class="col-4">
+                                    <p class="text-muted font-15 mb-1 text-truncate">This Month</p>
+                                    <h4>
+                                        <i
+                                            @if(article_statistics.this_month > article_statistics.last_month)
+                                                class="fe-arrow-up text-success mr-1"
+                                            @else
+                                                class="fe-arrow-down text-danger mr-1"
+                                            @endif
+                                            >
+                                        </i>
+                                        {{ article_statistics.this_month }}
+                                    </h4>
+                                </div>
+                            </div> <!-- end row -->
+                        </div>
+                    </div> <!-- collapsed end -->
+                </div> <!-- end card-body -->
+            </div> <!-- end card-->
+        </div> <!-- end col-->
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-widgets">
+                    </div>
+                    <h4 class="header-title mb-0">News</h4>
+
+                    <div id="cardCollpase3" class="cardCollpase3 collapse pt-3 show">
+                        <div class="text-center">
+                            <div id="newses_stats"></div>
+                            <div class="row mt-3">
+                                <div class="col-4">
+                                    <p class="text-muted font-15 mb-1 text-truncate">Total</p>
+                                    <h4>{{ news_statistics.total }}</h4>
+                                </div>
+                                <div class="col-4">
+                                    <p class="text-muted font-15 mb-1 text-truncate">Last Month</p>
+                                    <h4>{{ news_statistics.last_month }}</h4>
+                                </div>
+                                <div class="col-4">
+                                    <p class="text-muted font-15 mb-1 text-truncate">This Month</p>
+                                    <h4>
+                                        <i
+                                            @if(news_statistics.this_month > news_statistics.last_month)
+                                                class="fe-arrow-up text-success mr-1"
+                                            @else
+                                                class="fe-arrow-down text-danger mr-1"
+                                            @endif
+                                            >
+                                        </i>
+                                        {{ news_statistics.this_month }}
+                                    </h4>
+                                </div>
+                            </div> <!-- end row -->
+                        </div>
+                    </div> <!-- collapsed end -->
+                </div> <!-- end card-body -->
+            </div> <!-- end card-->
+        </div> <!-- end col-->
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <!-- Portlet card -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-widgets">
+                        {{--  <a data-toggle="collapse" href="#cardCollpase4" role="button" aria-expanded="false" aria-controls="cardCollpase4"><i class="mdi mdi-minus"></i></a>  --}}
+                        {{--  <a href="javascript: void(0);" data-toggle="remove"><i class="mdi mdi-close"></i></a>  --}}
+                    </div>
+                    <h4 class="header-title mb-0">Latest {{ articles.length }} Issues</h4>
+
+                    <div id="cardCollpase4" class="collapse pt-3 show">
+                        <div class="table-responsive">
+                            <table class="table table-centered table-borderless mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Issue</th>
+                                        <th>Written By</th>
+                                        <th>Status</th>
+                                        <th>Read Count</th>
+                                        <th>Download Count</th>
+                                        <th>Created On</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @each((article) in articles)
+                                        <tr>
+                                            <td>
+                                                <a href="{{ route('show_update_issue_article', { id: article.id }) }}">
+                                                    {{ article.title }}
+                                                </a>
+                                            </td>
+                                            <td>{{ article.issue }}</td>
+                                            <td>{{ article.author }}</td>
+                                            <td>
+                                                @if(article.status)
+                                                    <span class="badge bg-success text-dark p-1">Approved</span>
+                                                @else
+                                                    <span class="badge bg-warning text-dark p-1">Not Approved</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ article.read_count }}</td>
+                                            <td>{{ article.download_count }}</td>
+                                            <td>{{ article.created_at }}</td>
+                                        </tr>
+                                    @endeach
+                                </tbody>
+                            </table>
+                        </div> <!-- .table-responsive -->
+                    </div> <!-- end collapse-->
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div> <!-- end col-->
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <!-- Portlet card -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-widgets">
+                    </div>
+                    <h4 class="header-title mb-0">{{ most_read_articles.length }} Most Read Issues</h4>
+
+                    <div id="cardCollpase4" class="collapse pt-3 show">
+                        <div class="table-responsive">
+                            <table class="table table-centered table-borderless mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Issue</th>
+                                        <th>Read Count</th>
+                                        <th>Download Count</th>
+                                        <th>Created On</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @each((article) in most_read_articles)
+                                        <tr>
+                                            <td>
+                                                <a href="{{ route('show_update_issue_article', { id: article.id }) }}">
+                                                    {{ article.title }}
+                                                </a>
+                                            </td>
+                                            <td>{{ article.issue }}</td>
+                                            <td>{{ article.read_count }}</td>
+                                            <td>{{ article.download_count }}</td>
+                                            <td>{{ article.created_at }}</td>
+                                        </tr>
+                                    @endeach
+                                </tbody>
+                            </table>
+                        </div> <!-- .table-responsive -->
+                    </div> <!-- end collapse-->
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div> <!-- end col-->
+        <div class="col-6">
+            <!-- Portlet card -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-widgets">
+                    </div>
+                    <h4 class="header-title mb-0">{{ most_downloaded_articles.length }} Most Downloaded Issues</h4>
+
+                    <div id="cardCollpase4" class="collapse pt-3 show">
+                        <div class="table-responsive">
+                            <table class="table table-centered table-borderless mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Issue</th>
+                                        <th>Read Count</th>
+                                        <th>Download Count</th>
+                                        <th>Created On</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @each((article) in most_downloaded_articles)
+                                        <tr>
+                                            <td>
+                                                <a href="{{ route('show_update_issue_article', { id: article.id }) }}">
+                                                    {{ article.title }}
+                                                </a>
+                                            </td>
+                                            <td>{{ article.issue }}</td>
+                                            <td>{{ article.read_count }}</td>
+                                            <td>{{ article.download_count }}</td>
+                                            <td>{{ article.created_at }}</td>
+                                        </tr>
+                                    @endeach
+                                </tbody>
+                            </table>
+                        </div> <!-- .table-responsive -->
+                    </div> <!-- end collapse-->
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div> <!-- end col-->
+    </div>
+@endsection
+@section('page-scripts')
+    <script src="{{ asset('assets/theme/morris-js/morris.min.js') }}"></script>
+    <script src="{{ asset('assets/theme/raphael/raphael.min.js') }}"></script>
+    <script>
+        const totalIssueArticles = {{ article_statistics.total }};
+        const approvedIssueArticles = {{ article_statistics.approved }};
+        const pendingIssueArticles = {{ article_statistics.not_approved }};
+        const isuesData = [
+                {label: "Total", value: totalIssueArticles},
+                {label: "Approved", value: approvedIssueArticles},
+                {label: "Pending ", value: pendingIssueArticles}
+            ];
+        const issuesColors = ['#00acc1','#fd7e14', '#ebeff2'];
+         Morris.Donut({
+            element: 'articles_stats',
+            data: isuesData,
+            barSize: 0.2,
+            resize: true, //defaulted to true
+            colors: issuesColors
+        });
+
+        const totalNewsArticles = {{ news_statistics.total }};
+        const approvedNewsArticles = {{ news_statistics.published }};
+        const pendingNewsArticles = {{ news_statistics.not_published }};
+        const newsData = [
+                {label: "Total", value: totalNewsArticles},
+                {label: "Published", value: approvedNewsArticles},
+                {label: "Pending", value: pendingNewsArticles}
+            ];
+        const newsColors = ['#4fc6e1','#7e57c2', '#ebeff2'];
+         Morris.Donut({
+            element: 'newses_stats',
+            data: newsData,
+            barSize: 0.2,
+            resize: true, //defaulted to true
+            colors: newsColors
+        });
+
+    </script>
+@endsection

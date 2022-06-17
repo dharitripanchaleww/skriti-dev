@@ -1,0 +1,198 @@
+@layout('layout/master')
+
+@section('page-css')
+    <link rel="stylesheet" href="{{asset('assets/theme/quill/quill.core.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/theme/quill/quill.snow.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/theme/sweetalert/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/theme/bootstrap-select/bootstrap-select.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/theme/dropify/dropify.min.css') }}">
+@endsection
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form
+                        id="news_article_form"
+                        action=""
+                        enctype="multipart/form-data"
+                        method="POST"
+                        novalidate
+                        >
+                        <input type="hidden" name="id" value="{{ news_article.id }}">
+                        <div class="form-group mb-3">
+                            <label for="en_title">Title in EN</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="en_title"
+                                placeholder="Enter title in English."
+                                name="title_eng"
+                                data-parsley-length="[2, 70]"
+                                data-parsley-length-message="Title in EN shoud be between 2 and 70 characters."
+                                data-parsley-required-message="Please enter title in English."
+                                value="{{ news_article.en_title }}"
+                                required
+                                />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="ar_title">Title in AR</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="title_ar"
+                                placeholder="Enter title in Arabic."
+                                name="title_ar"
+                                data-parsley-length="[2, 70]"
+                                data-parsley-length-message="Title in AR shoud be between 2 and 70 characters."
+                                data-parsley-required-message="Please enter title in Arabic."
+                                value="{{ news_article.ar_title }}"
+                                required
+                            >
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="category">Category</label>
+                            <select
+                                id="category"
+                                name="category_id"
+                                class="selectpicker form-control"
+                                {{--  data-style="btn-outline-primary"  --}}
+                                data-live-search="true"
+                                data-parsley-required-message="Please select category."
+                                data-parsley-errors-container="#category-error-msg"
+                                required
+                                >
+                                @each(category in categories)
+                                    @if(category.id === news_article.category_id)
+                                        <option value="{{ category.id }}" selected>{{ category.value }}</option>
+                                    @else
+                                        <option value="{{ category.id }}" >{{ category.value }}</option>
+                                    @endif
+                                @endeach
+                            </select>
+                            <div id="category-error-msg"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="main_img">Main Image</label>
+                            <input
+                                type="file"
+                                name="image"
+                                id="main_img"
+                                class="dropify"
+                                accept="image/png, image/jpg, image/jpeg"
+                                data-default-file="/uploads/news/{{ news_article.img_name }}"
+                                data-max-file-size="2M"
+                                data-height="200px"
+                                data-parsley-required-message="Please select main image."
+                                data-parsley-errors-container="#main_img-error-msg"
+                                data-show-remove="false"
+                                />
+                            <p class="text-muted text-center mt-2 mb-0">Main Image</p>
+                            <div id="main_img-error-msg"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="en_description">Description in EN</label>
+                            <textarea
+                                class="form-control"
+                                id="en_description"
+                                placeholder="Describe issue in Arabic"
+                                rows="10"
+                                name="en_description"
+                                data-parsley-length="[2, 255]"
+                                data-parsley-length-message="Description in EN shoud be between 2 to 255 characters."
+                                data-parsley-required-message="Please enter description in English."
+                                required
+                                >{{ news_article.en_description }}</textarea>
+                        </div>
+                         <div class="form-group mb-3">
+                            <label for="ar_description">Description in AR</label>
+                            <textarea
+                                class="form-control"
+                                id="ar_description"
+                                placeholder="Describe issue in Arabic"
+                                rows="10"
+                                name="ar_description"
+                                data-parsley-length="[2, 255]"
+                                data-parsley-minlength-message="Description in AR shoud be between 2 to 255 characters."
+                                data-parsley-required-message="Please enter description in Arabic."
+                                required
+                                >{{ news_article.en_description }}</textarea>
+                        </div>
+                    <div class="form-group mb-3">
+                        <label for="en_content">Content in EN</label>
+                        {{--  <div id="en_content_editor" style="height: 70vh;">{{{ news_article.en_content }}}</div>  --}}
+                        <textarea
+                            class="form-control"
+                            id="en_content"
+                            placeholder=""
+                            name="en_content"
+                             data-parsley-minlength="2"
+                            data-parsley-minlength-message="Content in EN shoud be at least 2 characters."
+                            data-parsley-required-message="Please enter content in Arabic."
+                            rows="20"
+                            {{--  style="display:none;"  --}}
+                            required
+                            >{{{ news_article.en_content }}}</textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="ar_content">Content in AR</label>
+                        {{--  <div id="ar_content_editor" style="height: 70vh;">{{{ news_article.ar_content }}}</div>  --}}
+                        <textarea
+                            class="form-control"
+                            id="ar_content"
+                            placeholder=""
+                            name="ar_content"
+                            rows="20"
+                             data-parsley-minlength="2"
+                            data-parsley-minlength-message="Content in AR shoud be at least 2 characters."
+                            data-parsley-required-message="Please enter content in Arabic."
+                            {{--  style="display:none;"  --}}
+                            required
+                            >{{{ news_article.ar_content }}}</textarea>
+                    </div>
+                    <div class="form-group mb-3 mt-3">
+                            <label for="written_by">Written By</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="written_by"
+                                placeholder="Enter written by."
+                                name="written_by"
+                                data-parsley-length="[2, 70]"
+                                data-parsley-length-message="Written by shoud be between 2 and 70 characters."
+                                data-parsley-required-message="Please enter written by."
+                                value="{{ news_article.written_by }}"
+                                required
+                            >
+                        </div>
+                        {{--  <div class="custom-control custom-checkbox mb-3">
+                            <input
+                                type="checkbox"
+                                id="is_published"
+                                class="custom-control-input"
+                                name="is_published"
+                                @if(news_article.is_published)
+                                    checked
+                                @endif
+                                >
+                            <label class="custom-control-label" for="is_published">Is Publish ?</label>
+                        </div>  --}}
+                        <div class="col-12 offset-5">
+                            <button class="btn btn-default" type="submit">Update Article</button>
+                        </div>
+                    </form>
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div><!-- end col -->
+    </div>
+@endsection
+
+@section('page-scripts')
+    <script src="{{asset('assets/theme/quill/quill.min.js')}}"></script>
+    <script src="{{ asset('assets/theme/sweetalert/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('assets/theme/dropify/dropify.min.js') }}"></script>
+	<script src="{{ asset('assets/theme/bootstrap-select/bootstrap-select.min.js') }}"></script>
+	<script src="{{ asset('assets/js/parsley.min.js') }}"></script>
+	<script src="{{ asset('assets/js/news_article.js') }}"></script>
+@endsection

@@ -1,0 +1,24 @@
+import {
+	schema,
+	// rules
+} from '@ioc:Adonis/Core/Validator';
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import { {{ reporter_file_name }} } from './Reporters/{{ reporter_file_name }}';
+
+export default class {{ file_name }} {
+	constructor(protected ctx: HttpContextContract) { }
+
+	public reporter = {{ reporter_file_name }};
+
+	public refs = {
+		// id: this.ctx.request.input('id')
+	}
+
+	public cacheKey = '{{ cache_name }}';
+
+	public schema = schema.create({});
+
+	public messages = {
+		required: '{{ field }} is required.',
+	};
+}

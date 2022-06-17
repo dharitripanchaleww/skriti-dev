@@ -1,0 +1,49 @@
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import {{ paginationHelperfile_name }} from 'App/Helpers/{{ paginationHelperfile_name }}';
+import {{ helperfile_name }} from 'App/Helpers/{{ helperfile_name }}';
+import {{ model }} from 'App/Models/{{ model }}';
+import PaginationValidator from 'App/Validators/PaginationValidator';
+
+export default class {{ file_name }} {
+	public async list({ view }: HttpContextContract) {
+		const columns = {{ helperfile_name }}.getTableColumns();
+		const formFields = await {{ helperfile_name }}.getFormFields();
+		const extraBtns = {{ helperfile_name }}.getCustomBtns();
+		const filters = await BoardMemberHelper.getFilterDropdowns(formFields);
+		return view.render('table-master', {
+			page_name: '{{ page_name }}',
+			form_name: '{{ form_name }}',
+			formFields: formFields,
+			columns: columns,
+			filters: filters,
+			buttons: extraBtns,
+			is_deletable: true,
+			is_editable: false,
+			is_addable: false,
+		});
+	}
+
+	public async pagination({ request, response }: HttpContextContract) {
+		const paginationRawData = await request.validate(PaginationValidator);
+		const paginationSearchData = {{ paginationHelperfile_name }}.preparePaginationData(paginationRawData);
+		const paginationData = await {{ helperfile_name }}.getPaginationData(paginationSearchData);
+		return response.status(200).json({
+			draw: paginationRawData.draw,
+			recordsTotal: paginationData.total_rows,
+			recordsFiltered: paginationData.total_filtered_rows,
+			data: paginationData.data
+		});
+	}
+
+	public async delete({ request, response }: HttpContextContract) {
+		const requestData = request.only([ 'id' ]);
+		const {{ deleteObjName }} = await {{ model }}.findOrFail(requestData.id || 0);
+		await {{ deleteObjName }}.delete();
+		return response.status(200).json({
+			status: true,
+			type: 'delete',
+			message: `{{ model }} removed successfully.`,
+			data: {}
+		});
+	}
+}

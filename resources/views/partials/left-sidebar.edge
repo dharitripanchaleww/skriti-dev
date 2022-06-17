@@ -1,0 +1,194 @@
+{{ await auth.use('web').authenticate() }}
+<div class="left-side-menu">
+    <div class="slimscroll-menu">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+
+            <ul class="metismenu" id="side-menu">
+                <li>
+                    <a class="menu-link" href="{{ route('admin_home') }}">
+                        <i class="mdi mdi-desktop-mac-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-link" href="{{ route('users_list') }}">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="javascript: void(0);"><i class="fa fa-shopping-bag"></i><span> Products </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('categories') }}">Category</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('Subcategories') }}">Sub Categories</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('colors_list') }}">Colors Management</a>
+                        </li>
+                        <li>
+                            <a class="menu-link" href="{{ route('sizes_list') }}">Size Management</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- <li>
+                    <a class="menu-link" href="{{ route('faqs_list') }}">
+                        <i class="fas fa-question-circle"></i>
+                        <span>FAQs</span>
+                    </a>
+                </li> -->
+                <li>
+                    <a class="menu-link" href="{{ route('contact_us_inquires') }}">
+                        <i class="mdi mdi-contact-mail"></i>
+                        <span>Contact Us</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="mdi mdi-content-paste"></i>
+                        <span> CMS </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                            <li>
+                            <a class="menu-link" href="{{ route('terms_n_conditions') }}">Terms & Conditions</a>
+                        </li>
+                        <li>
+                            <a class="menu-link" href="{{ route('privacy_n_policy') }}">Privacy & Policy</a>
+                        </li>  
+                      
+                        <li>
+                            <a class="menu-link" href="{{ route('about_us') }}">About Us</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fe-settings"></i>
+                        <span> Configurations </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin_app_settings') }}">App Versions</a>
+                        </li>
+                        <li>
+                            <a class="menu-link" href="{{ route('admin_database_backups') }}">Database Backups</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                @if(auth.user.is_super_admin)
+                    <li>
+                        <a class="menu-link" href="{{ route('sub_admins_list') }}">
+                            <i class="fas fa-user-cog"></i>
+                            <span>Sub Admins</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="menu-link" href="{{ route('indexes_list') }}">
+                            <i class="mdi mdi-book-open"></i>
+                            <span>Index & Database</span>
+                        </a>
+                    </li>
+                    {{--  <li>
+                        <a class="menu-link" href="{{ route('board_types_list') }}">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>Board Types</span>
+                        </a>
+                    </li>  --}}
+                    <li>
+                        <a class="menu-link" href="{{ route('board_members_list') }}">
+                            <i class="fas fa-users"></i>
+                            <span>Board Members</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="javascript: void(0);">
+                            <i class="mdi mdi-newspaper"></i>
+                            <span> News </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li>
+                                <a class="menu-link" href="{{ route('news_categories') }}">Categories</a>
+                            </li>
+                            <li>
+                                <a class="menu-link" href="{{ route('news_articles') }}">Articles</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="menu-link" href="{{ route('faqs_list') }}">
+                            <i class="fas fa-question-circle"></i>
+                            <span>FAQs</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="menu-link" href="{{ route('contact_us_inquires') }}">
+                            <i class="mdi mdi-contact-mail"></i>
+                            <span>Contact Us</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="menu-link" href="{{ route('subscribers') }}">
+                            <i class="fas fa-user-check"></i>
+                            <span>Subscribers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);">
+                            <i class="mdi mdi-content-paste"></i>
+                            <span> CMS </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            {{--  <li>
+                                <a class="menu-link" href="{{ route('terms_n_conditions') }}">Terms & Conditions</a>
+                            </li>
+                            <li>
+                                <a class="menu-link" href="{{ route('privacy_n_policy') }}">Privacy & Policy</a>
+                            </li>  --}}
+                            <li>
+                                <a class="menu-link" href="{{ route('author') }}">About Author</a>
+                            </li>
+                            <li>
+                                <a class="menu-link" href="{{ route('publication_ethics') }}">Publication Ethics</a>
+                            </li>
+                            <li>
+                                <a class="menu-link" href="{{ route('about_journal') }}">About Journal</a>
+                            </li>
+                        </ul>
+                    </li>
+                     <li>
+                        <a href="javascript: void(0);">
+                            <i class="fe-settings"></i>
+                            <span> Configurations </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li>
+                                <a class="menu-link" href="{{ route('admin_database_backups') }}">Database Backups</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
+            </ul>
+
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Sidebar -left -->
+
+</div>

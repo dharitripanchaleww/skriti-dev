@@ -1,0 +1,69 @@
+export default class {{ file_name }} {
+	public static getSuccessMarkup(value: string): string {
+		return `
+			<span
+				class="table-status-update btn btn-success btn-rounded waves-effect waves-light"
+				data-toggle="modal"
+				data-target="#table-update-status-modal"
+				>
+				${value}
+			</span>
+		`;
+	}
+
+	public static getDangerMarkup(value: string): string {
+		return `
+			<span
+				class="table-status-update btn btn-danger btn-rounded waves-effect waves-light"
+				data-toggle="modal"
+				data-target="#table-update-status-modal"
+				>
+				${value}
+			</span>
+		`;
+	}
+
+	public static getWarningMarkup(value: string): string {
+		return `
+			<span
+				class="table-status-update btn btn-warning btn-rounded waves-effect waves-light"
+				data-toggle="modal"
+				data-target="#table-update-status-modal"
+				>
+				${value}
+			</span>
+		`;
+	}
+
+	public static getImageMarkup(path: string): string {
+		return `
+			<div class="avtar-sm">
+                <img
+                    src="${path}"
+                    style="max-height: 100px;"
+                    class="rounded-circle img-fluid"
+                    />
+            </div>
+		`;
+	}
+
+	public static getEditBtnMarkup(iconName = 'mdi mdi-pencil'): string {
+		return `
+			<button
+				class="table-update-row btn btn-success btn-xs btn-icon"
+				data-toggle="modal" data-target="#table-update-modal"
+			>
+				<i class="${iconName}"></i>
+			</button>
+		`;
+	}
+
+	public static getDeleteBtnMarkup(iconName = 'fa fa-times'): string {
+		return `
+			<button  class="table-delete-row btn btn-danger btn-xs btn-icon">
+				<i class="${iconName}"></i>
+			</button>
+		`;
+	}
+
+}

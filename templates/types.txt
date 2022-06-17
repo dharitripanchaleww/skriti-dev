@@ -1,0 +1,3 @@
+/**
+* Write your all type related to {{ name }} here.
+*/

@@ -1,0 +1,19 @@
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                2022 - 2023 &copy; <a href="https://skriti.com/">{{ env('Name') }}</a>
+            </div>
+        </div>
+    </div>
+    <div
+        id="loader"
+        class="loader-container"
+        {{--  style="display:block"  --}}
+        >
+        <lottie-player src="{{ asset('assets/images/skriti_new_loader.json') }}" background="transparent" speed="1" autoplay loop>
+        </lottie-player>
+        {{--  <div class="loader-overlay"></div>  --}}
+
+    </div>
+</footer>

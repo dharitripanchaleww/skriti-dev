@@ -1,0 +1,198 @@
+@layout('layout/master')
+
+@section('page-css')
+    <link rel="stylesheet" href="{{asset('assets/theme/quill/quill.core.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/theme/quill/quill.snow.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/theme/sweetalert/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/theme/bootstrap-select/bootstrap-select.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/theme/dropify/dropify.min.css') }}">
+    <style>
+        .select_dropdown {
+            border: 1px solid #ced4da !important;
+            height: 38px;
+        }
+        .bootstrap-select .dropdown-toggle:focus, .bootstrap-select>select.mobile-device:focus+.dropdown-toggle {
+            outline: 0 !important;
+        }
+    </style>
+@endsection
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form
+                        id="news_article_form"
+                        method="POST"
+                        action="{{ route('post_add_news_article') }}"
+                        enctype="multipart/form-data"
+                        novalidate
+                        >
+                        <div class="form-group mb-3">
+                            <label for="en_title">Title in EN</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="en_title"
+                                placeholder="Enter title in English."
+                                name="title_eng"
+                                data-parsley-length="[2, 70]"
+                                data-parsley-length-message="Title in EN shoud be between 2 and 70 characters."
+                                data-parsley-required-message="Please enter title in English."
+                                required
+                            >
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="ar_title">Title in AR</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="title_ar"
+                                placeholder="Enter title in Arabic."
+                                name="title_ar"
+                                data-parsley-length="[2, 70]"
+                                data-parsley-length-message="Title in AR shoud be between 2 and 70 characters."
+                                data-parsley-required-message="Please enter title in Arabic."
+                                required
+                            >
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="category">Category</label>
+                            <select
+                                id="category"
+                                name="category_id"
+                                class="selectpicker form-control select_dropdown"
+                                data-form-field-type="dropdown"
+                                {{--  data-style="btn-outline-primary"  --}}
+                                data-live-search="true"
+                                data-parsley-required-message="Please select category."
+                                data-parsley-errors-container="#category-error-msg"
+                                required
+                                >
+                                <option selected disabled hidden value=""> Select Category </option>
+                                @each(category in categories)
+                                    <option value="{{ category.id }}" >{{ category.value }}</option>
+                                @endeach
+                            </select>
+                            <div id="category-error-msg"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="main_img">Main Image</label>
+                            <input
+                                type="file"
+                                name="image"
+                                id="main_img"
+                                class="dropify"
+                                accept="image/png, image/jpg, image/jpeg"
+                                data-max-file-size="2M"
+                                data-height="200px"
+                                data-form-field-type="image"
+                                data-parsley-required-message="Please select main image."
+                                data-parsley-errors-container="#main_img-error-msg"
+                                required
+                                />
+                            <p class="text-muted text-center mt-2 mb-0">Main Image</p>
+                            <div id="main_img-error-msg"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="en_description">Description in EN</label>
+                            <textarea
+                                class="form-control"
+                                id="en_description"
+                                placeholder="Describe news article in English"
+                                rows="10"
+                                name="en_description"
+                                data-parsley-length="[2, 255]"
+                                data-parsley-length-message="Description in EN shoud be between 2 to 255 characters."
+                                data-parsley-required-message="Please enter description in English."
+                                required
+                                ></textarea>
+                        </div>
+                         <div class="form-group mb-3">
+                            <label for="ar_description">Description in AR</label>
+                            <textarea
+                                class="form-control"
+                                id="ar_description"
+                                placeholder="Describe news article in Arabic"
+                                rows="10"
+                                name="ar_description"
+                                data-parsley-length="[2, 255]"
+                                data-parsley-minlength-message="Description in AR shoud be between 2 to 255 characters."
+                                data-parsley-required-message="Please enter description in Arabic."
+                                required
+                                ></textarea>
+                        </div>
+                    <div class="form-group mb-3">
+                        <label for="en_content">Content in EN</label>
+                        {{--  <div id="en_content_editor" style="height: 70vh;"></div>  --}}
+                        <textarea
+                            class="form-control"
+                            id="en_content"
+                            placeholder=""
+                            name="en_content"
+                             data-parsley-minlength="2"
+                            data-parsley-minlength-message="Content in EN shoud be at least 2 characters."
+                            data-parsley-required-message="Please enter content in English."
+                            {{--  style="display:none;"  --}}
+                            rows="20"
+                            required
+                            ></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="ar_content">Content in AR</label>
+                        {{--  <div id="ar_content_editor" style="height: 70vh;"></div>  --}}
+                        <textarea
+                            class="form-control"
+                            id="ar_content"
+                            placeholder=""
+                            name="ar_content"
+                             data-parsley-minlength="2"
+                            data-parsley-minlength-message="Content in AR shoud be at least 2 characters."
+                            data-parsley-required-message="Please enter content in Arabic."
+                            {{--  style="display:none;"  --}}
+                            rows="20"
+                            required
+                            ></textarea>
+                    </div>
+                    <div class="form-group mb-3 mt-3">
+                            <label for="written_by">Written By</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="written_by"
+                                placeholder="Enter written by."
+                                name="written_by"
+                                data-parsley-length="[2, 70]"
+                                data-parsley-length-message="Written by shoud be between 2 and 70 characters.",
+                                data-parsley-required-message="Please enter written by."
+                                required
+                            >
+                        </div>
+                        <div class="custom-control custom-checkbox mb-3">
+                            <input
+                                type="checkbox"
+                                id="is_published"
+                                class="custom-control-input"
+                                name="is_published"
+                                >
+                            <label class="custom-control-label" for="is_published">Is Publish ?</label>
+                        </div>
+                        <div class="col-12 offset-5">
+                            <button class="btn btn-default" type="submit">Add New Article</button>
+                        </div>
+                    </form>
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div><!-- end col -->
+    </div>
+@endsection
+
+@section('page-scripts')
+    <script src="{{asset('assets/theme/quill/quill.min.js')}}"></script>
+    <script src="{{ asset('assets/theme/sweetalert/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('assets/theme/dropify/dropify.min.js') }}"></script>
+	<script src="{{ asset('assets/theme/bootstrap-select/bootstrap-select.min.js') }}"></script>
+	<script src="{{ asset('assets/js/parsley.min.js') }}"></script>
+	<script src="{{ asset('assets/js/news_article.js') }}"></script>
+@endsection
